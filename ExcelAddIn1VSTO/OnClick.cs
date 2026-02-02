@@ -96,7 +96,7 @@ namespace ExcelAddIn1
                 "people.json"
             );
 
-            exporter.Export(people, filePath);
+            exporter.ExportToFile(people, filePath);
 
             System.Windows.Forms.MessageBox.Show(
                 $"JSON exported to:\n{filePath}",
