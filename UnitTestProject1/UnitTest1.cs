@@ -1,13 +1,32 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ExcelAddIn1;
-namespace UnitTestProject1
+using ExcelAddIn1.Core.Services;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+
+[TestClass]
+public class PersonMappingTests
 {
-    [TestClass]
-    public class UnitTest1
+    [TestMethod]
+    public void MapRowToPerson_Should_Map_All_Fields()
     {
-        [TestMethod]
-        public void TestMethod1()
+        // ---------- ARRANGE ----------
+        object[] row =
         {
-        }
+            "Alice",
+            "30",
+            "Minsk"
+        };
+
+        var mapper = new PersonMapper();
+        // або твой клас, дзе MapRowToPerson
+
+        // ---------- ACT ----------
+        var person = mapper.MapRowToPerson(row);
+
+        // ---------- ASSERT ----------
+        Assert.AreEqual("Alice", person.Name);
+        Assert.AreEqual(30, person.Age);
+        Assert.AreEqual("Minsk", person.City);
     }
 }
+

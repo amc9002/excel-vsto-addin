@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36915.13 d17.14
+VisualStudioVersion = 17.14.36915.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelAddIn1", "ExcelAddIn1\ExcelAddIn1.csproj", "{FE4E3398-269C-405E-8CF3-F54FFE25DF2A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelAddIn1VSTO", "ExcelAddIn1VSTO\ExcelAddIn1VSTO.csproj", "{FE4E3398-269C-405E-8CF3-F54FFE25DF2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{A951F414-3FD2-4673-8C65-62EDEE390948}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelAddIn1.Core", "ExcelAddIn1.Core\ExcelAddIn1.Core.csproj", "{DB64877D-4784-410B-8838-FBB6780E6B14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelAddIn1.Tests", "ExcelAddIn1.Tests\ExcelAddIn1.Tests.csproj", "{6ADBA55D-9936-4FCB-B95D-FA93A32B9E23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +19,14 @@ Global
 		{FE4E3398-269C-405E-8CF3-F54FFE25DF2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE4E3398-269C-405E-8CF3-F54FFE25DF2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE4E3398-269C-405E-8CF3-F54FFE25DF2A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A951F414-3FD2-4673-8C65-62EDEE390948}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A951F414-3FD2-4673-8C65-62EDEE390948}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A951F414-3FD2-4673-8C65-62EDEE390948}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A951F414-3FD2-4673-8C65-62EDEE390948}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB64877D-4784-410B-8838-FBB6780E6B14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB64877D-4784-410B-8838-FBB6780E6B14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB64877D-4784-410B-8838-FBB6780E6B14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB64877D-4784-410B-8838-FBB6780E6B14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ADBA55D-9936-4FCB-B95D-FA93A32B9E23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ADBA55D-9936-4FCB-B95D-FA93A32B9E23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ADBA55D-9936-4FCB-B95D-FA93A32B9E23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ADBA55D-9936-4FCB-B95D-FA93A32B9E23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

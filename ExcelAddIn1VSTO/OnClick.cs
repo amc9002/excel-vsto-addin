@@ -1,11 +1,11 @@
 ﻿using Microsoft.Office.Tools.Ribbon;
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-
+using ExcelAddIn1.Core.Models;
+using ExcelAddIn1.Core.Services;
 
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -84,7 +84,8 @@ namespace ExcelAddIn1
                 if (row.All(v => string.IsNullOrWhiteSpace($"{v}")))
                     break;
 
-                var person = MapRowToPerson(row);
+                var mapper = new PersonMapper();
+                var person = mapper.MapRowToPerson(row);
                 people.Add(person);
             }
 
@@ -102,16 +103,6 @@ namespace ExcelAddIn1
                 "Export complete"
             );
 
-        }
-
-        private Person MapRowToPerson(object[] row)
-        {
-            return new Person
-            {
-                Name = row[0]?.ToString(),
-                Age = int.TryParse(row[1]?.ToString(), out var age) ? age : (int?)null,
-                City = row[2]?.ToString()
-            };
         }
 
     }
