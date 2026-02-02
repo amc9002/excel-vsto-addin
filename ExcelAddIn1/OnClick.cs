@@ -23,56 +23,56 @@ namespace ExcelAddIn1
             var sheet = (Excel.Worksheet)app.ActiveWorkbook.ActiveSheet;
 
             int headerRow = 1;
-            var headers = Enumerable
-                .Range(1, 100) // верхняя мяжа (разумная)
-                .Select(c => sheet.Cells[1, c].Value)
+            int maxColumns = 100;
+
+            // 1. Вызначаем загалоўкі
+            var headers = Enumerable.Range(1, maxColumns)
+                .Select(c => sheet.Cells[headerRow, c].Value2)
                 .TakeWhile(v => v != null && !string.IsNullOrWhiteSpace($"{v}"))
                 .Select(v => $"{v}")
                 .ToList();
 
             int columnCount = headers.Count;
+            System.Diagnostics.Debug.WriteLine($"Columns: {columnCount}");
 
+            if (columnCount == 0)
+                return;
 
-            System.Diagnostics.Debug.WriteLine($"Total columns: {columnCount}");
+            // 2. Вызначаем дыяпазон дадзеных
+            int startRow = headerRow + 1;
+            int endRow = startRow + 1000; 
 
-            // 2. Чытаем радкі пад загалоўкамі
-            int row = headerRow + 1;
+            var range = sheet.Range[
+                sheet.Cells[startRow, 1],
+                sheet.Cells[endRow, columnCount]
+            ];
 
-            while (true)
+            // 3. АДЗІН COM-выклік
+            var values = (object[,])range.Value2;
+
+            // 4. Апрацоўка ў .NET (без COM)
+            for (int r = 1; r <= values.GetLength(0); r++)
             {
-                bool isEmptyRow = Enumerable
-                    .Range(1, columnCount)
-                    .Select(c => sheet.Cells[row, c].Value)
-                    .All(v => v == null || string.IsNullOrWhiteSpace($"{v}"));
+                var rowValues = new List<string>();
+                bool isEmptyRow = true;
 
+                for (int c = 1; c <= values.GetLength(1); c++)
+                {
+                    var cell = values[r, c];
+                    string text = $"{cell}";
+
+                    if (!string.IsNullOrWhiteSpace(text))
+                        isEmptyRow = false;
+
+                    rowValues.Add(text);
+                }
 
                 if (isEmptyRow)
-                {
-                    break; // дадзеныя скончыліся
-                }
+                    break;
 
-                // Выводзім радок у Debug
-                System.Diagnostics.Debug.Write($"Row {row}: ");
-
-                for (row = 2; ; row++)
-                {
-                    var values = Enumerable.Range(1, headers.Count)
-                        .Select(c => sheet.Cells[row, c].Value)
-                        .ToList();
-
-                    if (values.All(v => string.IsNullOrWhiteSpace($"{v}")))
-                        break;
-
-                    Debug.WriteLine(string.Join("\t", values));
-                }
-
-
-                System.Diagnostics.Debug.WriteLine("");
-                row++;
+                System.Diagnostics.Debug.WriteLine(string.Join("\t", rowValues));
             }
         }
-
-
 
     }
 
