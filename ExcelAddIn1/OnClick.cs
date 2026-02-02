@@ -3,9 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+
 
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -72,6 +72,46 @@ namespace ExcelAddIn1
 
                 System.Diagnostics.Debug.WriteLine(string.Join("\t", rowValues));
             }
+
+            var people = new List<Person>();
+
+            for (int r = 1; r <= values.GetLength(0); r++)
+            {
+                var row = Enumerable.Range(1, columnCount)
+                    .Select(c => values[r, c])
+                    .ToArray();
+
+                if (row.All(v => string.IsNullOrWhiteSpace($"{v}")))
+                    break;
+
+                var person = MapRowToPerson(row);
+                people.Add(person);
+            }
+
+            var exporter = new JsonExportService();
+
+            string filePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                "people.json"
+            );
+
+            exporter.Export(people, filePath);
+
+            System.Windows.Forms.MessageBox.Show(
+                $"JSON exported to:\n{filePath}",
+                "Export complete"
+            );
+
+        }
+
+        private Person MapRowToPerson(object[] row)
+        {
+            return new Person
+            {
+                Name = row[0]?.ToString(),
+                Age = int.TryParse(row[1]?.ToString(), out var age) ? age : (int?)null,
+                City = row[2]?.ToString()
+            };
         }
 
     }
