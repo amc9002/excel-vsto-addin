@@ -18,11 +18,67 @@ namespace ExcelAddIn1
         }
         private void BtnExport_Click(object sender, RibbonControlEventArgs e)
         {
-            var sheet = (Excel.Worksheet)
-                Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet;
+            var app = Globals.ThisAddIn.Application;
+            var sheet = (Excel.Worksheet)app.ActiveWorkbook.ActiveSheet;
 
-            sheet.Cells[1, 1].Value = "Hello from VSTO";
+            int headerRow = 1;
+            int col = 1;
+
+            // 1. Вызначаем калёнкі па загалоўках
+            while (true)
+            {
+                var headerValue = sheet.Cells[headerRow, col].Value;
+
+                if (headerValue == null || string.IsNullOrWhiteSpace($"{headerValue}"))
+                {
+                    break;
+                }
+
+                col++;
+            }
+
+            int columnCount = col - 1;
+
+            System.Diagnostics.Debug.WriteLine($"Total columns: {columnCount}");
+
+            // 2. Чытаем радкі пад загалоўкамі
+            int row = headerRow + 1;
+
+            while (true)
+            {
+                bool isEmptyRow = true;
+
+                for (int c = 1; c <= columnCount; c++)
+                {
+                    var cellValue = sheet.Cells[row, c].Value;
+
+                    if (cellValue != null && !string.IsNullOrWhiteSpace($"{cellValue}"))
+                    {
+                        isEmptyRow = false;
+                        break;
+                    }
+                }
+
+                if (isEmptyRow)
+                {
+                    break; // дадзеныя скончыліся
+                }
+
+                // Выводзім радок у Debug
+                System.Diagnostics.Debug.Write($"Row {row}: ");
+
+                for (int c = 1; c <= columnCount; c++)
+                {
+                    var cellValue = sheet.Cells[row, c].Value;
+                    System.Diagnostics.Debug.Write($"{cellValue}\t");
+                }
+
+                System.Diagnostics.Debug.WriteLine("");
+                row++;
+            }
         }
+
+
 
     }
 
