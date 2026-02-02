@@ -15,3 +15,15 @@ obj/
 
 # Logs
 *.log
+
+# Excel temporary files
+~$*.xlsx
+~$*.xls
+~$*.xlsm
+
+# NuGet packages
+packages/
+
+# Test adapters / SDK artifacts
+**/TestAdapter/
+**/TestResults/
