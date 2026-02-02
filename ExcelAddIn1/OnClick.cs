@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -22,22 +23,15 @@ namespace ExcelAddIn1
             var sheet = (Excel.Worksheet)app.ActiveWorkbook.ActiveSheet;
 
             int headerRow = 1;
-            int col = 1;
+            var headers = Enumerable
+                .Range(1, 100) // верхняя мяжа (разумная)
+                .Select(c => sheet.Cells[1, c].Value)
+                .TakeWhile(v => v != null && !string.IsNullOrWhiteSpace($"{v}"))
+                .Select(v => $"{v}")
+                .ToList();
 
-            // 1. Вызначаем калёнкі па загалоўках
-            while (true)
-            {
-                var headerValue = sheet.Cells[headerRow, col].Value;
+            int columnCount = headers.Count;
 
-                if (headerValue == null || string.IsNullOrWhiteSpace($"{headerValue}"))
-                {
-                    break;
-                }
-
-                col++;
-            }
-
-            int columnCount = col - 1;
 
             System.Diagnostics.Debug.WriteLine($"Total columns: {columnCount}");
 
@@ -46,18 +40,11 @@ namespace ExcelAddIn1
 
             while (true)
             {
-                bool isEmptyRow = true;
+                bool isEmptyRow = Enumerable
+                    .Range(1, columnCount)
+                    .Select(c => sheet.Cells[row, c].Value)
+                    .All(v => v == null || string.IsNullOrWhiteSpace($"{v}"));
 
-                for (int c = 1; c <= columnCount; c++)
-                {
-                    var cellValue = sheet.Cells[row, c].Value;
-
-                    if (cellValue != null && !string.IsNullOrWhiteSpace($"{cellValue}"))
-                    {
-                        isEmptyRow = false;
-                        break;
-                    }
-                }
 
                 if (isEmptyRow)
                 {
@@ -67,11 +54,18 @@ namespace ExcelAddIn1
                 // Выводзім радок у Debug
                 System.Diagnostics.Debug.Write($"Row {row}: ");
 
-                for (int c = 1; c <= columnCount; c++)
+                for (row = 2; ; row++)
                 {
-                    var cellValue = sheet.Cells[row, c].Value;
-                    System.Diagnostics.Debug.Write($"{cellValue}\t");
+                    var values = Enumerable.Range(1, headers.Count)
+                        .Select(c => sheet.Cells[row, c].Value)
+                        .ToList();
+
+                    if (values.All(v => string.IsNullOrWhiteSpace($"{v}")))
+                        break;
+
+                    Debug.WriteLine(string.Join("\t", values));
                 }
+
 
                 System.Diagnostics.Debug.WriteLine("");
                 row++;
