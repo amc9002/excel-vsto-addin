@@ -1,12 +1,5 @@
 ﻿using ExcelAddIn1.Core.Models;
 using ExcelAddIn1.Core.Services;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace ExcelAddIn1.Tests
 {
     public class CsvExportServiceTests
@@ -20,16 +13,19 @@ namespace ExcelAddIn1.Tests
                 new Person { Name = "Bob, Jr.", Age = null, City = "NY" }
             };
 
-            var path = Path.GetTempFileName();
+            var path = Path.Combine(
+                Path.GetTempPath(),
+                Guid.NewGuid() + ".csv"
+            );
             var service = new CsvExportService();
 
             service.Export(data, path);
 
-            var text = File.ReadAllText(path);
+            var lines = File.ReadAllLines(path);
 
-            Assert.Contains("Alice,30,Minsk", text);
-            Assert.Contains("\"Bob, Jr.\",,NY", text);
+            Assert.Equal("Name,Age,City,ValidationErrors", lines[0]);
+            Assert.Equal("Alice,30,Minsk,", lines[1]);
+            Assert.Equal("\"Bob, Jr.\",,NY,", lines[2]);
         }
-
     }
 }

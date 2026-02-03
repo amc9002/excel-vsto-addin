@@ -34,6 +34,12 @@ namespace ExcelAddIn1
             return path;
         }
 
+        public void ExportToXbrl()
+        {
+            // Пакуль што проста дыягностыка, каб праверыць ланцужок
+            System.Windows.Forms.MessageBox.Show("Coordinator атрымаў каманду на XBRL!");
+        }
+
         // ---------------- private ----------------
 
         private List<Person> ReadPeople(Excel.Worksheet sheet)

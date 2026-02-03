@@ -186,6 +186,7 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="AddInRibbon.cs" />
     <Compile Include="ExcelExportCoordinator.cs" />
     <Compile Include="ExcelTableReader.cs" />
     <Compile Include="OnClick.cs">
@@ -236,6 +237,12 @@
       <Project>{db64877d-4784-410b-8838-fbb6780e6b14}</Project>
       <Name>ExcelAddIn1.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestRibbon.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AddInRibbon.xml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

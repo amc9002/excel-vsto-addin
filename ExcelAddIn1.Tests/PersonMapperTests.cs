@@ -60,7 +60,7 @@ namespace ExcelAddIn1.Tests
             var mapper = new PersonMapper();
             var person = mapper.MapRowToPerson(row);
 
-            Assert.Equal("", person.Name);
+            Assert.Null(person.Name);
             Assert.Null(person.Age);
             Assert.Null(person.City);
         }

@@ -1,0 +1,13 @@
+﻿<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui">
+	<ribbon>
+		<tabs>
+			<tab id="tabExcelExport" label="Excel Export">
+				<group id="groupExport" label="Export Operations">
+					<button id="btnExportJson" label="Export JSON" size="large" onAction="OnTestClicked" />
+					<button id="btnExportCsv" label="Export CSV" size="large" onAction="OnTestClicked" />
+					<button id="btnExportXbrl" label="Export XBRL" size="large" onAction="OnTestClicked" />
+				</group>
+			</tab>
+		</tabs>
+	</ribbon>
+</customUI>

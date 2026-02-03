@@ -19,8 +19,12 @@ namespace ExcelAddIn1
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
         }
-        
-                #region VSTO generated code
+        protected override Microsoft.Office.Core.IRibbonExtensibility CreateRibbonExtensibilityObject()
+        {
+            System.Windows.Forms.MessageBox.Show("Запыт на стварэнне Ribbon атрыманы!");
+            return new AddInRibbon();
+        }
+        #region VSTO generated code
 
         /// <summary>
         /// Required method for Designer support - do not modify

@@ -12,7 +12,7 @@ namespace ExcelAddIn1.Core.Services
         {
             var person = new Person();
 
-            person.Name = GetString(row, 0)?? "";
+            person.Name = GetString(row, 0);
 
             if (TryGetInt(row, 1, out int age))
             {
