@@ -51,5 +51,29 @@ namespace ExcelAddIn1.Tests
             Assert.Null(person.Age);
             Assert.Null(person.City);
         }
+
+        [Fact]
+        public void MapRow_Should_Handle_Empty_Strings()
+        {
+            object[] row = { "", "", "" };
+
+            var mapper = new PersonMapper();
+            var person = mapper.MapRowToPerson(row);
+
+            Assert.Equal("", person.Name);
+            Assert.Null(person.Age);
+            Assert.Equal("", person.City);
+        }
+
+        [Fact]
+        public void MapRow_Should_Set_Age_Null_When_Not_Number()
+        {
+            object[] row = { "Alice", "abc", "Minsk" };
+
+            var person = new PersonMapper().MapRowToPerson(row);
+
+            Assert.Null(person.Age);
+        }
+
     }
 }

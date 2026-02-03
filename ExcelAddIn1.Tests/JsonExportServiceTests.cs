@@ -69,5 +69,32 @@ namespace ExcelAddIn1.Tests
             }
         }
 
+        [Fact]
+        public void Export_Should_Write_Empty_Array_When_Data_Is_Empty()
+        {
+            var service = new JsonExportService();
+            var path = Path.GetTempFileName();
+
+            service.ExportToFile(new List<Person>(), path);
+
+            var json = File.ReadAllText(path);
+            Assert.Equal("[]", json.Trim());
+        }
+
+        [Fact]
+        public void Export_Should_Overwrite_Existing_File()
+        {
+            var path = Path.GetTempFileName();
+            File.WriteAllText(path, "OLD");
+
+            new JsonExportService().ExportToFile(
+                new[] { new Person { Name = "Alice" } },
+                path
+            );
+
+            var json = File.ReadAllText(path);
+            Assert.Contains("Alice", json);
+        }
+
     }
 }
