@@ -1,6 +1,8 @@
-﻿using ExcelAddIn1.Core.Services;
+﻿using ExcelAddIn1.Core.Models;
+using ExcelAddIn1.Core.Services;
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -12,24 +14,47 @@ namespace ExcelAddIn1
     {
         public string ExportPeopleToJson(Excel.Worksheet sheet)
         {
-            var reader = new ExcelTableReader();
-            var rows = reader.ReadTable(sheet);
-
-            var mapper = new PersonMapper();
-            var people = rows
-                .Select(row => mapper.MapRowToPerson(row))
-                .ToList();
+            var people = ReadPeople(sheet);
 
             var exporter = new JsonExportService();
-
-            string path = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                "people.json"
-            );
+            string path = GetDefaultPath("people.json");
 
             exporter.ExportToFile(people, path);
             return path;
         }
+
+        public string ExportPeopleToCsv(Excel.Worksheet sheet)
+        {
+            var people = ReadPeople(sheet);
+
+            var exporter = new CsvExportService();
+            string path = GetDefaultPath("people.csv");
+
+            exporter.Export(people, path);
+            return path;
+        }
+
+        // ---------------- private ----------------
+
+        private List<Person> ReadPeople(Excel.Worksheet sheet)
+        {
+            var reader = new ExcelTableReader();
+            var rows = reader.ReadTable(sheet);
+
+            var mapper = new PersonMapper();
+            return rows
+                .Select(row => mapper.MapRowToPerson(row))
+                .ToList();
+        }
+
+        private string GetDefaultPath(string fileName)
+        {
+            return Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                fileName
+            );
+        }
     }
+
 
 }

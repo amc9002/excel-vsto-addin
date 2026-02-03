@@ -20,13 +20,13 @@ namespace ExcelAddIn1
         {
 
         }
-        private void BtnExport_Click(object sender, RibbonControlEventArgs e)
+        private void BtnExportJSON_Click(object sender, RibbonControlEventArgs e)
         {
             var app = Globals.ThisAddIn.Application;
             var sheet = (Excel.Worksheet)app.ActiveWorkbook.ActiveSheet;
 
-            var exportService = new ExcelExportCoordinator();
-            string filePath = exportService.ExportPeopleToJson(sheet);
+            var coordinator = new ExcelExportCoordinator();
+            string filePath = coordinator.ExportPeopleToJson(sheet);
 
             MessageBox.Show(
                 $"JSON exported to:\n{filePath}",
@@ -34,6 +34,19 @@ namespace ExcelAddIn1
             );
         }
 
-    }
+        private void BtnExportCSV_Click(object sender, RibbonControlEventArgs e)
+        {
+            var app = Globals.ThisAddIn.Application;
+            var sheet = (Excel.Worksheet)app.ActiveWorkbook.ActiveSheet;
 
+            var coordinator = new ExcelExportCoordinator();
+            string filePath = coordinator.ExportPeopleToCsv(sheet);
+
+            MessageBox.Show(
+                $"CSV exported to:\n{filePath}",
+                "Export complete"
+            );
+        }
+
+    }
 }

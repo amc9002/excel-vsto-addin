@@ -36,7 +36,8 @@
         {
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group1 = this.Factory.CreateRibbonGroup();
-            this.btnExport = this.Factory.CreateRibbonButton();
+            this.btnExportJSON = this.Factory.CreateRibbonButton();
+            this.btnExportCSV = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.SuspendLayout();
@@ -50,15 +51,22 @@
             // 
             // group1
             // 
-            this.group1.Items.Add(this.btnExport);
+            this.group1.Items.Add(this.btnExportJSON);
+            this.group1.Items.Add(this.btnExportCSV);
             this.group1.Label = "group1";
             this.group1.Name = "group1";
             // 
-            // btnExport
+            // btnExportJSON
             // 
-            this.btnExport.Label = "Export JSON";
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BtnExport_Click);
+            this.btnExportJSON.Label = "Export JSON";
+            this.btnExportJSON.Name = "btnExportJSON";
+            this.btnExportJSON.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BtnExportJSON_Click);
+            // 
+            // btnExportCSV
+            // 
+            this.btnExportCSV.Label = "Export CSV";
+            this.btnExportCSV.Name = "btnExportCSV";
+            this.btnExportCSV.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BtnExportCSV_Click);
             // 
             // OnClick
             // 
@@ -78,7 +86,8 @@
 
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab1;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnExport;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnExportJSON;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnExportCSV;
     }
 
     partial class ThisRibbonCollection

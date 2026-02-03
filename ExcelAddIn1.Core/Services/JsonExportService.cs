@@ -25,6 +25,4 @@ namespace ExcelAddIn1.Core.Services
             File.WriteAllText(filePath, json);
         }
     }
-
-
 }
