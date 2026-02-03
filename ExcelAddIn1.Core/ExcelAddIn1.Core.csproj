@@ -48,6 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\JsonExportService.cs" />
     <Compile Include="Services\PersonMapper.cs" />
+    <Compile Include="Services\SsvExportService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

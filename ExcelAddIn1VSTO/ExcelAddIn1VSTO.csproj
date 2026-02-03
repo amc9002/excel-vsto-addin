@@ -186,6 +186,8 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="ExcelExportCoordinator.cs" />
+    <Compile Include="ExcelTableReader.cs" />
     <Compile Include="OnClick.cs">
       <SubType>Component</SubType>
     </Compile>

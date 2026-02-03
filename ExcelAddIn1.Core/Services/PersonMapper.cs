@@ -1,5 +1,7 @@
 ﻿using ExcelAddIn1.Core.Models;
 
+using Newtonsoft.Json.Linq;
+
 using System;
 
 namespace ExcelAddIn1.Core.Services
@@ -8,21 +10,56 @@ namespace ExcelAddIn1.Core.Services
     {
         public Person MapRowToPerson(object[] row)
         {
-            if (row == null)
-                throw new ArgumentNullException(nameof(row)); 
+            var person = new Person();
 
-            Person person = new Person();
+            person.Name = GetString(row, 0)?? "";
 
-            person.Name = row.Length > 0 ? row[0]?.ToString() : null;
+            if (TryGetInt(row, 1, out int age))
+            {
+                if (age >= 0 && age <= 130)
+                    person.Age = age;
+                else
+                    person.ValidationErrors.Add("Invalid age");
+            }
 
-            if (row.Length > 1 && int.TryParse(row[1]?.ToString(), out var age))
-                person.Age = age;
-
-            person.City = row.Length > 2 ? row[2]?.ToString() : null;
+            person.City = GetString(row, 2);
 
             return person;
+        }
 
+        private string GetString(object[] row, int index)
+        {
+            if (row == null || index >= row.Length)
+                return null;
+
+            var value = row[index];
+            var text = $"{value}".Trim();
+
+            return string.IsNullOrWhiteSpace(text) ? null : text;
+        }
+
+        private bool TryGetInt(object[] row, int index, out int value)
+        {
+            value = default;
+
+            if (row == null || index >= row.Length)
+                return false;
+
+            var raw = row[index];
+            if (raw == null)
+                return false;
+
+            var text = raw.ToString().Trim();
+            if (string.IsNullOrEmpty(text))
+                return false;
+
+            if (!int.TryParse(text, out value))
+                return false;
+
+            return true;
         }
     }
+
 }
+
 

@@ -62,7 +62,7 @@ namespace ExcelAddIn1.Tests
 
             Assert.Equal("", person.Name);
             Assert.Null(person.Age);
-            Assert.Equal("", person.City);
+            Assert.Null(person.City);
         }
 
         [Fact]
@@ -73,6 +73,18 @@ namespace ExcelAddIn1.Tests
             var person = new PersonMapper().MapRowToPerson(row);
 
             Assert.Null(person.Age);
+        }
+
+        [Fact]
+        public void MapRow_InvalidAge_Should_Add_ValidationError()
+        {
+            object[] row = { "Alice", "200", "Minsk" };
+
+            var mapper = new PersonMapper();
+            var person = mapper.MapRowToPerson(row);
+
+            Assert.Null(person.Age);
+            Assert.Contains("Invalid age", person.ValidationErrors);
         }
 
     }
