@@ -127,8 +127,10 @@ Core logic is reusable outside Excel if needed
 This project is provided for demonstration and educational purposes.
 
 <p align="center">
+
   <img src="https://github.com/user-attachments/assets/6192f47a-a9d0-4446-ab14-3bef869e12bb" width="800" alt="Excel Ribbon UI">
   <br>
-  <i>Інтэрфейс надбудовы ў Excel</i>
+  <i>Excel ribbon interface</i>
+
 </p>
 
