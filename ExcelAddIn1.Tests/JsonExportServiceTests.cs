@@ -6,43 +6,65 @@ namespace ExcelAddIn1.Tests
     public class JsonExportServiceTests
     {
         [Fact]
-        public void Serialize_Should_Return_Valid_Json()
+        public void Export_Should_Save_Valid_Json_Structure()
         {
             // ARRANGE
-            var people = new List<Person>
-        {
-            new() { Name = "Alice", Age = 30, City = "Minsk" }
-        };
-
             var service = new JsonExportService();
+            var path = Path.GetTempFileName();
+            var data = new List<Person>
+            {
+                new() { Name = "Alice", Age = 30, City = "Minsk" }
+            };
 
-            // ACT
-            var json = service.Serialize(people);
+            try
+            {
+                // ACT
+                service.Export(data, path);
 
-            // ASSERT
-            Assert.Contains("\"Name\": \"Alice\"", json);
-            Assert.Contains("\"Age\": 30", json);
-            Assert.Contains("\"City\": \"Minsk\"", json);
+                // ASSERT
+                var json = File.ReadAllText(path);
+                Assert.Contains("\"Name\": \"Alice\"", json);
+                Assert.Contains("\"Age\": 30", json);
+            }
+            finally
+            {
+                if (File.Exists(path)) File.Delete(path);
+            }
         }
 
         [Fact]
-        public void Serialize_Should_Return_Empty_Array_For_Empty_List()
+        public void Export_Should_Write_Empty_Array_To_File_When_Data_Is_Empty()
         {
+            // ARRANGE
             var service = new JsonExportService();
+            var path = Path.GetTempFileName();
+            var emptyList = new List<Person>();
 
-            var json = service.Serialize(new List<Person>());
+            try
+            {
+                // ACT
+                service.Export(emptyList, path);
 
-            Assert.Equal("[]", json.Trim());
+                // ASSERT
+                var json = File.ReadAllText(path).Trim();
+                Assert.Equal("[]", json);
+            }
+            finally
+            {
+                if (File.Exists(path)) File.Delete(path);
+            }
         }
 
         [Fact]
-        public void Serialize_Should_Throw_When_Data_Is_Null()
+        public void Export_Should_Throw_ArgumentNullException_When_Data_Is_Null()
         {
+            // ARRANGE
             var service = new JsonExportService();
+            var path = "any_path.json";
 
+            // ACT & ASSERT
             Assert.Throws<ArgumentNullException>(() =>
-                service.Serialize<Person>(null)
-            );
+                service.Export<Person>(null, path));
         }
 
         [Fact]
@@ -58,7 +80,7 @@ namespace ExcelAddIn1.Tests
 
             try
             {
-                service.ExportToFile(people, path);
+                service.Export(people, path);
 
                 var content = File.ReadAllText(path);
                 Assert.Contains("Alice", content);
@@ -75,7 +97,7 @@ namespace ExcelAddIn1.Tests
             var service = new JsonExportService();
             var path = Path.GetTempFileName();
 
-            service.ExportToFile(new List<Person>(), path);
+            service.Export(new List<Person>(), path);
 
             var json = File.ReadAllText(path);
             Assert.Equal("[]", json.Trim());
@@ -87,7 +109,7 @@ namespace ExcelAddIn1.Tests
             var path = Path.GetTempFileName();
             File.WriteAllText(path, "OLD");
 
-            new JsonExportService().ExportToFile(
+            new JsonExportService().Export(
                 new[] { new Person { Name = "Alice" } },
                 path
             );

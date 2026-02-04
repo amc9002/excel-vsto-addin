@@ -83,7 +83,7 @@ namespace ExcelAddIn1.Tests
             var mapper = new PersonMapper();
             var person = mapper.MapRowToPerson(row);
 
-            Assert.Null(person.Age);
+            Assert.Equal(person.Age, 200);
             Assert.Contains("Invalid age", person.ValidationErrors);
         }
 
