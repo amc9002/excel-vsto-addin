@@ -189,18 +189,9 @@
     <Compile Include="AddInRibbon.cs" />
     <Compile Include="ExcelExportCoordinator.cs" />
     <Compile Include="ExcelTableReader.cs" />
-    <Compile Include="OnClick.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="OnClick.Designer.cs">
-      <DependentUpon>OnClick.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <EmbeddedResource Include="OnClick.resx">
-      <DependentUpon>OnClick.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

@@ -22,24 +22,27 @@ namespace ExcelAddIn1
         }
 
         // Метад для кнопкі
-        public void OnTestClicked(Microsoft.Office.Core.IRibbonControl control)
+        public void OnTestClicked(IRibbonControl control)
         {
-            // Проста паказваем, што менавіта націснута
-            MessageBox.Show($"Выбраны фармат: {control.Id}");
-
+            var app = Globals.ThisAddIn.Application;
+            var sheet = (Microsoft.Office.Interop.Excel.Worksheet)app.ActiveWorkbook.ActiveSheet;
             var coordinator = new ExcelExportCoordinator();
+            string filePath = string.Empty;
 
-            // Лагічны разгалiнавальнік
             switch (control.Id)
             {
                 case "btnExportJson":
-                    // Тут будзе выклік JSON логікі
+                    filePath = coordinator.ExportToJson(sheet);
+                    MessageBox.Show($"JSON exported to:\n{filePath}", "Export complete");
                     break;
+
                 case "btnExportCsv":
-                    // Тут будзе выклік CSV логікі
+                    filePath = coordinator.ExportToCsv(sheet);
+                    MessageBox.Show($"CSV exported to:\n{filePath}", "Export complete");
                     break;
+
                 case "btnExportXbrl":
-                    coordinator.ExportToXbrl();
+                    coordinator.ExportToXbrl(sheet); 
                     break;
             }
         }

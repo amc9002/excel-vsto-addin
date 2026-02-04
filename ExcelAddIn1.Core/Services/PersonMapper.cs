@@ -15,11 +15,11 @@ namespace ExcelAddIn1.Core.Services
             person.Name = GetString(row, 0);
 
             if (TryGetInt(row, 1, out int age))
+                person.Age = age;
+
+            if (age < 0 || age > 130)
             {
-                if (age >= 0 && age <= 130)
-                    person.Age = age;
-                else
-                    person.ValidationErrors.Add("Invalid age");
+                person.ValidationErrors.Add("Invalid age");
             }
 
             person.City = GetString(row, 2);

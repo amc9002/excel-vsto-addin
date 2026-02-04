@@ -49,6 +49,7 @@
     <Compile Include="Services\JsonExportService.cs" />
     <Compile Include="Services\PersonMapper.cs" />
     <Compile Include="Services\CsvExportService.cs" />
+    <Compile Include="Services\XbrlExportService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
