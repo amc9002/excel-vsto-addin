@@ -21,7 +21,6 @@ namespace ExcelAddIn1
         }
         protected override Microsoft.Office.Core.IRibbonExtensibility CreateRibbonExtensibilityObject()
         {
-            System.Windows.Forms.MessageBox.Show("Запыт на стварэнне Ribbon атрыманы!");
             return new AddInRibbon();
         }
         #region VSTO generated code
