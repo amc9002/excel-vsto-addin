@@ -27,3 +27,4 @@ packages/
 # Test adapters / SDK artifacts
 **/TestAdapter/
 **/TestResults/
+"packages/" 
